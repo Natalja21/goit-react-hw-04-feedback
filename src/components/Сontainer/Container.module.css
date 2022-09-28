@@ -1,0 +1,12 @@
+.feedbek__container {
+  width: 640px;
+  height: 640px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 200px;
+  background-image: url('../img/clipboard-5458980_640.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

@@ -1,0 +1,11 @@
+.title {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  text-decoration: underline 5px solid rgb(16, 95, 34);
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.17;
+  letter-spacing: 0.03em;
+  text-align: center;
+  font-family: 'Times New Roman', Times, serif;
+}

@@ -1,0 +1,10 @@
+.subtitle {
+  font-family: 'Times New Roman', Times, serif;
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 2;
+  letter-spacing: 0.06em;
+  margin-top: 40px;
+  color: rgb(112, 107, 107);
+}
