@@ -1,66 +1,73 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import FeedbackOptions from '../FeedbackOptions/FeedbackOptions';
 import Statistics from '../Statistics/Statistics';
 import Section from '../Section/Section';
 import Container from '../Сontainer/Container';
 import Notification from '../Notification/Notification';
 
-class FeedbackForm extends Component {
-  static defaultProps = {
-    initialGood: 0,
-    initialNeutral: 0,
-    initialBad: 0,
-  };
-  static propsType = {
-    good: PropTypes.number.isRequired,
-    neutral: PropTypes.number.isRequired,
-    bad: PropTypes.number.isRequired,
-  };
-  state = {
-    good: this.props.initialGood,
-    neutral: this.props.initialNeutral,
-    bad: this.props.initialBad,
+const FeedbackForm = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const options = {
+    good,
+    neutral,
+    bad,
   };
 
-  addFeedback = option => {
-    this.setState(state => ({
-      [option]: state[option] + 1,
-    }));
+  const addFeedback = option => {
+    switch (option) {
+      case 'good':
+        setGood(good + 1);
+        break;
+
+      case 'neutral':
+        setNeutral(neutral + 1);
+        break;
+
+      case 'bad':
+        setBad(bad + 1);
+        break;
+
+      default:
+        return;
+    }
   };
 
-  render() {
-    const total = Object.values(this.state).reduce(
-      (acc, value) => acc + value,
-      0
-    );
-    const { good } = this.state;
-    const countPositiveFeedbackPercentage =
-      Math.round((good / total) * 100) || 0;
-    return (
-      <Container>
-        <Section title="Please leave feedback">
-          <FeedbackOptions
-            options={Object.keys(this.state)}
-            onLeaveFeedback={this.addFeedback}
+  const getTotal = () => {
+    const res = good + neutral + bad;
+    return res;
+  };
+  const total = getTotal();
+
+  const getCountPositiveFeedbackPercentage = () => {
+    return Math.round((good / total) * 100);
+  };
+  const countPositiveFeedback = getCountPositiveFeedbackPercentage();
+
+  return (
+    <Container>
+      <Section title="Please leave feedback">
+        <FeedbackOptions
+          options={Object.keys(options)}
+          onLeaveFeedback={addFeedback}
+        />
+      </Section>
+      <Section title="Statistics">
+        {total > 0 ? (
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={total}
+            positivePercentage={countPositiveFeedback}
           />
-        </Section>
-        <Section title="Statistics">
-          {total > 0 ? (
-            <Statistics
-              good={this.state.good}
-              neutral={this.state.neutral}
-              bad={this.state.bad}
-              total={total}
-              positivePercentage={countPositiveFeedbackPercentage}
-            />
-          ) : (
-            <Notification message="There is no feedback !" />
-          )}
-        </Section>
-      </Container>
-    );
-  }
-}
-
+        ) : (
+          <Notification message="There is no feedback !" />
+        )}
+      </Section>
+    </Container>
+  );
+};
 export default FeedbackForm;
